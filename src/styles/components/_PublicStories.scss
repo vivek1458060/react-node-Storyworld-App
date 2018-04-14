@@ -1,0 +1,58 @@
+
+.public-stories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.story-column {
+    width: 24rem;
+}
+
+.story {
+    display: flex;
+    flex-direction: column;
+    padding: 0 5px;
+    cursor: pointer;
+    > div {
+        margin-top: 8px;
+        background: $orange;
+        padding: 10px 15px;
+        text-align: justify;
+        -webkit-box-shadow: 0 0 5px 0 grey;
+        -moz-box-shadow: 0 0 5px 0 grey;
+        box-shadow: 0 0 10px 0 grey;
+        transition: background .3s ease-in-out;
+        &:hover {
+            background: lighten($orange, 10%);
+        }
+    }
+}
+
+.story__title {
+    margin: 0 0 10px 0;
+    .fa-edit {
+        color: $off-blue;
+        float: right;
+    }
+}
+
+.story__body {
+    margin: 0;
+    max-height: 38rem;
+    overflow-y: hidden;
+}
+
+@media (max-width: 800px) {
+    .story-column {
+        width: 24rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .story-column {
+        flex: 100%;
+        max-width: 100%;
+    }
+}

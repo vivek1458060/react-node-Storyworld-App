@@ -1,0 +1,65 @@
+.ReactModalPortal > div {
+    opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 300ms ease-in-out;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.modal {
+    background: $orange; //#FAFAFA
+    width: 588px;
+    outline: none;
+    > form {
+        display: flex;
+        flex-direction: column;
+        background: $orange;
+    }
+}
+
+.modal__title {
+    margin: 0;
+    padding: 10px 15px;
+}
+
+.modal__body {
+    -moz-box-shadow:    inset  0  10px 10px -10px grey, 
+                        inset  0 -10px 10px -10px grey;
+    -webkit-box-shadow: inset  0  10px 10px -10px grey, 
+                        inset  0 -10px 10px -10px grey;
+    box-shadow:         inset  0  10px 10px -10px grey, 
+                        inset  0 -10px 10px -10px grey;
+    outline: none;
+    text-align: justify;
+    padding: 5px 10px 25px 10px;
+    background: $orange; 
+    &:disabled {
+        color: black;
+    }
+}
+
+.modal__footer {
+    padding: 0 10px;
+}
+
+.modal .button--link {
+    color: black;
+    float: right;
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .modal {
+        width: 100%;
+    }
+}
