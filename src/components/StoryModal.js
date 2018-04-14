@@ -61,7 +61,7 @@ export class StoryModal extends React.Component {
                 >
                     <form onSubmit={this.onSubmit}>
                         <input 
-                            className="modal__title" 
+                            className="modal-title" 
                             value={this.state.heading} 
                             name="heading"
                             placeholder="Name of your story"
@@ -71,7 +71,7 @@ export class StoryModal extends React.Component {
                         <Textarea 
                             name="text"
                             placeholder="text"
-                            className="modal__body"
+                            className="modal-body"
                             minRows={5} 
                             maxRows={25} 
                             value={this.state.text}
@@ -79,16 +79,17 @@ export class StoryModal extends React.Component {
                             onChange={this.onTextChange}
                             >
                         </Textarea>
-                        <div className="modal__footer">
+                        <div className="modal-footer">
                             {  !this.state.disabled && (
-                                <div>
-                                    <span>keep private </span>
-                                    <input 
-                                        checked={this.state.privacy}  //defaultChecked
-                                        type="checkbox" 
-                                        name="privacy"
-                                        onChange={this.onPrivacyChange}
-                                    />
+                                <div className="modal-footer__actions">
+                                    <span>keep private 
+                                        <input 
+                                            checked={this.state.privacy}  //defaultChecked
+                                            type="checkbox" 
+                                            name="privacy"
+                                            onChange={this.onPrivacyChange}
+                                        />
+                                    </span>
                                     { this.state._creator && (
                                         <MdDelete 
                                             className="fa fa-delete"
