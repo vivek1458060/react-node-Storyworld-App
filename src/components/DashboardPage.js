@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PublicStories from './PublicStories';
+import AddStory from './AddStory';
 
 export const DashboardPage = () => (
     <div>
@@ -13,7 +14,10 @@ export const DashboardPage = () => (
                 </div>
             </div>
         </div>
-        <PublicStories />
+        <div className="content-container">
+            <AddStory />
+            <PublicStories />
+        </div>
     </div>
 );
 

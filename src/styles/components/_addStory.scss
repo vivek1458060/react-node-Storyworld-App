@@ -1,0 +1,25 @@
+.add-story {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $l-size;
+}
+
+.add-story--text-input {
+    flex-grow: 1;
+    max-width: 500px;
+    border: none;
+    height: 5rem;
+    outline: none;
+    background: $white;
+}
+
+.add-story__icons {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    background: $white;
+}
+
+.add-story__icons .fa-pencil{
+    color: $off-blue
+}

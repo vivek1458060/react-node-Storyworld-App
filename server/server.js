@@ -23,7 +23,7 @@ app.post('/stories', authenticate, (req, res) => {
   var story = new Story({
     heading: req.body.heading,
     text: req.body.text,
-    private: req.body.private,
+    privacy: req.body.privacy,
     creatorName: req.user.fullName,
     _creator: req.user._id
   });
@@ -38,7 +38,7 @@ app.post('/stories', authenticate, (req, res) => {
 //get all public strories
 app.get('/stories/public', (req, res) => {
   Story.find({
-    private: false
+    privacy: false
   }).then((stories) => {
     res.send({stories});
   }).catch((e) => {
@@ -55,7 +55,7 @@ app.get('/stories/allpublic/:id', (req, res) => {
 
   Story.find({
     _creator: id,
-    private: false
+    privacy: false
   }).then((stories) => {
     return User.findById(id).then((user) => {
       res.send({
@@ -76,7 +76,7 @@ app.get('/stories/singlepublic/:id', (req, res) => {
     return res.status(404).send();
   }
 
-  Story.findOne({_id: id, private: false}).then((story) => {
+  Story.findOne({_id: id, privacy: false}).then((story) => {
     if(!story) {
       return res.status(404).send();
     }
@@ -126,7 +126,7 @@ app.delete('/stories/:id', authenticate, (req, res) => {
 //update a story
 app.patch('/stories/:id', authenticate, (req, res) => {
   var id = req.params.id;
-  var body = _.pick(req.body, ['heading', 'text', 'private', 'completed']);
+  var body = _.pick(req.body, ['heading', 'text', 'privacy', 'completed']);
 
   if(!ObjectID.isValid(id)) {
     return res.status(404).send();

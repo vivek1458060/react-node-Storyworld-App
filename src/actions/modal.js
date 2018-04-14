@@ -1,6 +1,11 @@
-export const openModal = (selectedStory) => ({
+const storyData = {
+    heading: '',
+    text: '',
+    privacy: false
+}
+export const openModal = (story = storyData) => ({
     type: 'OPEN_MODAL',
-    selectedStory
+    story
 })
 
 export const closeModal = () => ({

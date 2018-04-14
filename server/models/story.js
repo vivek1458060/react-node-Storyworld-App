@@ -4,7 +4,7 @@ const _ = require('lodash');
 var StorySchema = new mongoose.Schema({
   heading: { type: String, required: true, trim: true, minlength: 1 },
   text: { type: String, required: true, trim: true, minlength: 1 },
-  private: { type:Boolean, required: true },
+  privacy: { type:Boolean, default: false },
   completed: { type: Boolean, default: false },
   completedAt: { type: Number, default: null },
   comments: [{
@@ -42,6 +42,7 @@ StorySchema.methods.toJSON = function() {
     '_id',
     'heading', 
     'text', 
+    'privacy',
     'creatorName',
     '_creator',
     'comments',

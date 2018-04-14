@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {openModal} from '../actions/modal';
 import FaEdit from 'react-icons/lib/fa/edit';
+import MdDelete from 'react-icons/lib/md/delete';
 
 export class Story extends React.Component {
     state = {
@@ -17,10 +18,15 @@ export class Story extends React.Component {
         return (
             <div className="story" onClick={this.handlePick}>
                 <div>
-                    <h4 className="story__title">
-                        {this.state.story.heading} 
-                        { this.props.uid === this.state.story._creator && <FaEdit className="fa fa-edit" />}
-                    </h4>
+                    <div className="story__title">
+                        <h4>{this.state.story.heading}</h4>
+                        { this.props.uid === this.state.story._creator && (
+                            <div className="icons">
+                                <MdDelete className="fa fa-delete" />
+                                <FaEdit className="fa fa-edit" />
+                            </div>
+                        )}
+                    </div>
                     <p className="story__body">{this.state.story.text}...</p>
                 </div>
             </div>

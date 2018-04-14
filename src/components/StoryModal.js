@@ -1,67 +1,109 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
-import {startEditStory} from '../actions/stories';
+import {startEditStory, startAddStory, startDeleteStory} from '../actions/stories';
 import {closeModal} from '../actions/modal';
 import Textarea from "react-textarea-autosize";
+import MdDelete from 'react-icons/lib/md/delete';
 
 export class StoryModal extends React.Component {
+    state = {}
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            ...nextProps.story,
+            disabled: nextProps.story ? (
+                nextProps.story._creator ? !(nextProps.story._creator === this.props.uid) : false
+            ) : false
+        })
+    }
+    onHeadingChange = (e) => {
+        this.setState({heading: e.target.value})
+    }
+    onTextChange = (e) => {
+        this.setState({text: e.target.value})
+    }
+    onPrivacyChange = (e) => {
+        this.setState({privacy: e.target.checked})
+    }
+    deleteStory = () => {
+        this.props.startDeleteStory(this.state._id);
+        this.props.closeModal();
+    }
     onSubmit = (e) => {
         e.preventDefault();
-        if(this.props.uid === this.props.selectedStory._creator) {
-            this.props.startEditStory({
-                _id: this.props.selectedStory._id,
+        if(this.props.story._creator) {
+            if(this.props.uid === this.props.story._creator) { // edit mode
+                this.props.startEditStory({
+                    _id: this.props.story._id,
+                    heading: e.target.heading.value,
+                    text: e.target.text.value,
+                    privacy: e.target.privacy.checked
+                });
+            }
+        } else { //add mode
+            this.props.startAddStory({
                 heading: e.target.heading.value,
                 text: e.target.text.value,
-                // private: e.target.private.checked
+                privacy: e.target.privacy.checked
             });
         }
-        this.props.closeModal();
+        this.props.closeModal(); //close model for all three mode
     }
     render() {
         return (
             <div>
                 <Modal 
-                    isOpen={!!this.props.selectedStory}
+                    isOpen={!!this.props.story}
                     onRequestClose={this.props.closeModal}
                     contentLabel="Story Modal"
                     closeTimeoutMS={300}
                     className="modal"
                 >
-                    {
-                        this.props.selectedStory && (
-                            <form onSubmit={this.onSubmit}>
-                                <input 
-                                    className="modal__title" 
-                                    defaultValue={this.props.selectedStory.heading} 
-                                    name="heading"
-                                    disabled={ !(this.props.uid === this.props.selectedStory._creator) }
-                                />
-                                <Textarea 
-                                    name="text"
-                                    className="modal__body"
-                                    minRows={5} 
-                                    maxRows={25} 
-                                    defaultValue={this.props.selectedStory.text}
-                                    disabled={ !(this.props.uid === this.props.selectedStory._creator) }
-                                    >
-                                </Textarea>
-                                <div className="modal__footer">
-                                    <span>Private</span>
+                    <form onSubmit={this.onSubmit}>
+                        <input 
+                            className="modal__title" 
+                            value={this.state.heading} 
+                            name="heading"
+                            placeholder="Name of your story"
+                            disabled={ this.state.disabled }
+                            onChange={this.onHeadingChange}
+                        />
+                        <Textarea 
+                            name="text"
+                            placeholder="text"
+                            className="modal__body"
+                            minRows={5} 
+                            maxRows={25} 
+                            value={this.state.text}
+                            disabled={ this.state.disabled }
+                            onChange={this.onTextChange}
+                            >
+                        </Textarea>
+                        <div className="modal__footer">
+                            {  !this.state.disabled && (
+                                <div>
+                                    <span>keep private </span>
                                     <input 
-                                        defaultChecked={true}
+                                        checked={this.state.privacy}  //defaultChecked
                                         type="checkbox" 
-                                        name="private"
+                                        name="privacy"
+                                        onChange={this.onPrivacyChange}
                                     />
-                                    <button 
-                                        className="button button--link"
-                                    >
-                                        Close
-                                    </button>
+                                    { this.state._creator && (
+                                        <MdDelete 
+                                            className="fa fa-delete"
+                                            onClick={this.deleteStory} 
+                                        />
+                                    )}
                                 </div>
-                            </form>
-                        )
-                    }
+                            )}
+                            <button 
+                                className="button button--link"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </form>
                 </Modal>
             </div>
         )
@@ -69,13 +111,15 @@ export class StoryModal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    selectedStory: state.modal.selectedStory,
+    story: state.modal.story,
     uid: state.auth.uid
 })
 
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => dispatch(closeModal()),
-    startEditStory: (story) => dispatch(startEditStory(story))
+    startEditStory: (story) => dispatch(startEditStory(story)),
+    startAddStory: (story) => dispatch(startAddStory(story)),
+    startDeleteStory: (_id) => dispatch(startDeleteStory(_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryModal);

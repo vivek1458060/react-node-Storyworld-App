@@ -31,10 +31,19 @@
 }
 
 .story__title {
-    margin: 0 0 10px 0;
-    .fa-edit {
-        color: $off-blue;
-        float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.story__title h4 {
+    margin: 0 0 5px 0;
+}
+
+.story__title .icons {
+    padding: 5px;
+    > * {
+        margin-right: 5px;
     }
 }
 

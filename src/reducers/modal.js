@@ -1,12 +1,12 @@
-export default (state = { selectedStory: undefined }, action) => {
+export default (state = { story: undefined }, action) => {
     switch(action.type) {
         case 'OPEN_MODAL':
             return {
-                selectedStory: action.selectedStory
+                story: action.story
             }
         case 'CLOSE_MODAL':
             return {
-                selectedStory: undefined
+                story: undefined
             }
         default: 
             return state

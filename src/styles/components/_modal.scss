@@ -24,13 +24,13 @@
     > form {
         display: flex;
         flex-direction: column;
-        background: $orange;
     }
 }
 
 .modal__title {
     margin: 0;
     padding: 10px 15px;
+    background: $orange;
 }
 
 .modal__body {
@@ -51,9 +51,12 @@
 
 .modal__footer {
     padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.modal .button--link {
+.modal__footer .button--link {
     color: black;
     float: right;
 }
