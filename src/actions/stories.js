@@ -83,7 +83,7 @@ export const setSingleUserStories = (stories) => ({
     stories
 })
 
-export const StartSetSingleUserStories = (_creator) => {
+export const startSetSingleUserStories = (_creator) => {
     return (dispatch, getState) => {
         if(_creator === getState().auth.uid) {
             return axios({
@@ -91,7 +91,6 @@ export const StartSetSingleUserStories = (_creator) => {
                 url: `/stories`,
                 headers: {'x-auth': getState().auth.authToken}
             }).then((response) => {
-                console.log(response.data.stories)
                 dispatch(setSingleUserStories(response.data.stories))
             }).catch((e) => {
                 console.log(e);
@@ -101,7 +100,6 @@ export const StartSetSingleUserStories = (_creator) => {
                 method: 'get',
                 url: `/stories/allpublic/${_creator}`
             }).then((response) => {
-                console.log(response.data.stories)
                 dispatch(setSingleUserStories(response.data.stories))
             }).catch((e) => {
                 console.log(e);

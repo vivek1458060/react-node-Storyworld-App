@@ -15,7 +15,7 @@ export class Stories extends React.Component {
         var fs, fe, ss, se, ts, te;
         f = s = t = each;
         if (left == 1) {
-            s += 1
+            f += 1
         } else if (left == 2) {
             f += 1;
             s += 1;

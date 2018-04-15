@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Stories from './Stories';
 import AddStory from './AddStory';
+import {startSetSingleUserStories} from '../actions/stories';
 
 export class ProfilePage extends React.Component {
+    componentWillMount() {
+        this.props.startSetSingleUserStories();
+    }
     render() {
         return (
+            this.props.stories.length && (
             <div>
                 <div className="page-header">
                     <div className="content-container">
@@ -28,15 +33,20 @@ export class ProfilePage extends React.Component {
                         <Stories 
                             stories={this.props.stories}
                         />
-                    </div>
+                </div>
             </div>
+            )
         )
     }
 }
 
 const mapStateToProps = (state, props) => ({
     uid: state.auth.uid,
-    stories: state.stories.filter((story) => story._creator === props.match.params.id)
+    stories: state.stories.filter((story) => story._creator === props.match.params.uid)
 })
 
-export default connect(mapStateToProps)(ProfilePage);
+const mapDispatchToProps = (dispatch, props) => ({
+    startSetSingleUserStories: () => dispatch(startSetSingleUserStories(props.match.params.uid))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

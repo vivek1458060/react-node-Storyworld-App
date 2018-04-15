@@ -11,9 +11,9 @@ export class StoryModal extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             ...nextProps.story,
-            disabled: nextProps.story ? (
-                nextProps.story._creator ? !(nextProps.story._creator === this.props.uid) : false
-            ) : false
+            isCurrentUser: nextProps.story ? (
+                nextProps.story._creator ? (nextProps.story._creator === this.props.uid) : true
+            ) : true
         })
     }
     onHeadingChange = (e) => {
@@ -65,7 +65,7 @@ export class StoryModal extends React.Component {
                             value={this.state.heading} 
                             name="heading"
                             placeholder="Name of your story"
-                            disabled={ this.state.disabled }
+                            disabled={ !this.state.isCurrentUser }
                             onChange={this.onHeadingChange}
                         />
                         <Textarea 
@@ -75,12 +75,12 @@ export class StoryModal extends React.Component {
                             minRows={5} 
                             maxRows={25} 
                             value={this.state.text}
-                            disabled={ this.state.disabled }
+                            disabled={ !this.state.isCurrentUser }
                             onChange={this.onTextChange}
                             >
                         </Textarea>
                         <div className="modal-footer">
-                            {  !this.state.disabled && (
+                            {  this.state.isCurrentUser && (
                                 <div className="modal-footer__actions">
                                     <span>keep private 
                                         <input 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {openModal} from '../actions/modal';
-import {StartSetSingleUserStories} from '../actions/stories';
 import FaEdit from 'react-icons/lib/fa/edit';
 import MdDelete from 'react-icons/lib/md/delete';
 import {history} from '../routers/AppRouter';
@@ -17,9 +16,7 @@ export class Story extends React.Component {
         this.setState({story: nextProps.story})
     }
     hanldeUser = () => {
-        const storyCreator = this.state.story._creator;
-        this.props.StartSetSingleUserStories(storyCreator);
-        history.push(`/profile/${storyCreator}`);
+        history.push(`/profile/${this.state.story._creator}`);
     }
     render() {
         return (
@@ -55,7 +52,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     openModal: (story) => dispatch(openModal(story)),
-    StartSetSingleUserStories: (_id) => dispatch(StartSetSingleUserStories(_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Story);
