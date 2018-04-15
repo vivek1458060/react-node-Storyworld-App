@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {openModal} from '../actions/modal';
+import {StartSetSingleUserStories} from '../actions/stories';
 import FaEdit from 'react-icons/lib/fa/edit';
 import MdDelete from 'react-icons/lib/md/delete';
+import {history} from '../routers/AppRouter';
 
 export class Story extends React.Component {
     state = {
@@ -14,10 +16,15 @@ export class Story extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({story: nextProps.story})
     }
+    hanldeUser = () => {
+        const storyCreator = this.state.story._creator;
+        this.props.StartSetSingleUserStories(storyCreator);
+        history.push(`/profile/${storyCreator}`);
+    }
     render() {
         return (
-            <div className="story" onClick={this.handlePick}>
-                <div>
+            <div className="story">
+                <div onClick={this.handlePick}>
                     <div className="story__title">
                         <h4>{this.state.story.heading}</h4>
                         { this.props.uid === this.state.story._creator && (
@@ -29,6 +36,14 @@ export class Story extends React.Component {
                     </div>
                     <p className="story__body">{this.state.story.text}...</p>
                 </div>
+                <div className="story__footer">
+                    <button 
+                        className="button button--link"
+                        onClick={this.hanldeUser}
+                    >
+                        by {this.state.story.creatorName}
+                    </button>
+                </div>
             </div>
         )
     }
@@ -39,7 +54,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    openModal: (story) => dispatch(openModal(story))
+    openModal: (story) => dispatch(openModal(story)),
+    StartSetSingleUserStories: (_id) => dispatch(StartSetSingleUserStories(_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Story);

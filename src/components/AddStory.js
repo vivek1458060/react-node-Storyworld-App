@@ -8,7 +8,7 @@ export const AddStory = (props) => (
         <input 
             type="text" 
             className="text-input add-story--text-input" 
-            placeholder="write your story" 
+            placeholder="Post new story" 
             onClick={() => props.openModal()}
         />
         <div className="add-story__icons">

@@ -5,7 +5,7 @@ export const setStories = (stories) => ({
     stories
 })
 
-//get all public stories
+//get public stories on initial app render
 export const startSetStories = () => {
     return (dispatch) => {
         return axios('/stories/public').then((response) => {
@@ -76,3 +76,37 @@ export const startDeleteStory = (_id) => {
         })
     }
 }
+
+//get pubic stories of individual user by userid || get all(private and pubic) stories of current user by userid
+export const setSingleUserStories = (stories) => ({
+    type: 'GET_SINGLE_USER_STORIES',
+    stories
+})
+
+export const StartSetSingleUserStories = (_creator) => {
+    return (dispatch, getState) => {
+        if(_creator === getState().auth.uid) {
+            return axios({
+                method: 'get',
+                url: `/stories`,
+                headers: {'x-auth': getState().auth.authToken}
+            }).then((response) => {
+                console.log(response.data.stories)
+                dispatch(setSingleUserStories(response.data.stories))
+            }).catch((e) => {
+                console.log(e);
+            })
+        } else {
+            return axios({
+                method: 'get',
+                url: `/stories/allpublic/${_creator}`
+            }).then((response) => {
+                console.log(response.data.stories)
+                dispatch(setSingleUserStories(response.data.stories))
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
+    }
+}
+

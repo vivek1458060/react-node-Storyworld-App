@@ -1,5 +1,4 @@
-
-.public-stories {
+.stories {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -14,12 +13,12 @@
     display: flex;
     flex-direction: column;
     padding: 0 5px;
-    cursor: pointer;
-    > div {
-        margin-top: 8px;
+    margin-top: 8px;
+    > div:first-child {
         background: $orange;
         padding: 10px 15px;
         text-align: justify;
+        cursor: pointer;
         -webkit-box-shadow: 0 0 5px 0 grey;
         -moz-box-shadow: 0 0 5px 0 grey;
         box-shadow: 0 0 10px 0 grey;
@@ -52,6 +51,16 @@
     max-height: 38rem;
     overflow-y: hidden;
 }
+
+.story__footer {
+    background: $orange;
+    text-align: right;
+    .button--link {
+        font-size: $font-size-small;
+        color: $off-blue;
+    }
+}
+
 
 @media (max-width: 800px) {
     .story-column {
