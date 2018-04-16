@@ -1,9 +1,4 @@
-const storyData = {
-    heading: '',
-    text: '',
-    privacy: false
-}
-export const openModal = (story = storyData) => ({
+export const openModal = (story) => ({
     type: 'OPEN_MODAL',
     story
 })

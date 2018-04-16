@@ -49,7 +49,6 @@ const onAuthStateChanged = () => {
             }
         })
       }).catch((e) => {
-        console.log(e);
         store.dispatch(logout());
         renderApp();
         history.push('/');

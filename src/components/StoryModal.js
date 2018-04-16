@@ -7,17 +7,33 @@ import Textarea from "react-textarea-autosize";
 import MdDelete from 'react-icons/lib/md/delete';
 
 export class StoryModal extends React.Component {
-    state = {}
+    state = {
+        ...this.getDefaultState()
+    }
+    getDefaultState() {
+        return {
+            _id: null,
+            heading: '',
+            text: '',
+            privacy: '',
+            completed: null,
+            completedAt: null,
+            _creator: null,
+            creatorName: null,
+            isCurrentUserStory: null,
+            error: ''
+        }
+    }
     componentWillReceiveProps(nextProps) {
         this.setState({
             ...nextProps.story,
-            isCurrentUser: nextProps.story ? (
+            isCurrentUserStory: nextProps.story ? (
                 nextProps.story._creator ? (nextProps.story._creator === this.props.uid) : true
             ) : true
         })
     }
     onHeadingChange = (e) => {
-        this.setState({heading: e.target.value})
+        this.setState({heading: e.target.value, error: ''})
     }
     onTextChange = (e) => {
         this.setState({text: e.target.value})
@@ -28,44 +44,59 @@ export class StoryModal extends React.Component {
     deleteStory = () => {
         this.props.startDeleteStory(this.state._id);
         this.props.closeModal();
+        this.setState({...this.getDefaultState()})
     }
     onSubmit = (e) => {
         e.preventDefault();
-        if(this.props.story._creator) {
-            if(this.props.uid === this.props.story._creator) { // edit mode
-                this.props.startEditStory({
-                    _id: this.props.story._id,
-                    heading: e.target.heading.value,
-                    text: e.target.text.value,
-                    privacy: e.target.privacy.checked
-                });
+        const _id = this.state._id;
+        const heading = this.state.heading;
+        const text = this.state.text;
+        const privacy = this.state.privacy;
+        const _creator = this.state._creator;
+
+        if(this.props.story) { //if story exist, then we are either in edit or read mode
+            if(this.props.uid === _creator) { // edit mode
+                if(this.state.heading) {
+                    this.props.startEditStory({ _id, heading, text, privacy });
+                } else if(text.trim()) {
+                    this.setState({error: 'name your story'})
+                } else {
+                    this.props.startDeleteStory(_id);
+                }
             }
         } else { //add mode
-            this.props.startAddStory({
-                heading: e.target.heading.value,
-                text: e.target.text.value,
-                privacy: e.target.privacy.checked
-            });
+            if(heading) {
+                this.props.startAddStory({ heading, text, privacy });
+            } else if(text.trim()) {
+                this.setState({error: 'name your story'})
+            }
         }
-        this.props.closeModal(); //close model for all three mode
+
+        this.setState((prevState) => {
+            if(!prevState.error) {
+                this.props.closeModal();
+                return {...this.getDefaultState()}
+            }
+        })
     }
     render() {
         return (
             <div>
                 <Modal 
-                    isOpen={!!this.props.story}
-                    onRequestClose={this.props.closeModal}
+                    isOpen={!!this.props.isOpen}
+                    onRequestClose={this.onSubmit}
                     contentLabel="Story Modal"
                     closeTimeoutMS={300}
                     className="modal"
                 >
                     <form onSubmit={this.onSubmit}>
+                        {this.state.error && <span className="modal__error">{this.state.error}</span>}
                         <input 
                             className="modal-title" 
                             value={this.state.heading} 
                             name="heading"
                             placeholder="Name of your story"
-                            disabled={ !this.state.isCurrentUser }
+                            disabled={ !this.state.isCurrentUserStory }
                             onChange={this.onHeadingChange}
                         />
                         <Textarea 
@@ -75,12 +106,12 @@ export class StoryModal extends React.Component {
                             minRows={5} 
                             maxRows={25} 
                             value={this.state.text}
-                            disabled={ !this.state.isCurrentUser }
+                            disabled={ !this.state.isCurrentUserStory }
                             onChange={this.onTextChange}
                             >
                         </Textarea>
                         <div className="modal-footer">
-                            {  this.state.isCurrentUser && (
+                            {  this.state.isCurrentUserStory && (
                                 <div className="modal-footer__actions">
                                     <span>keep private 
                                         <input 
@@ -90,11 +121,8 @@ export class StoryModal extends React.Component {
                                             onChange={this.onPrivacyChange}
                                         />
                                     </span>
-                                    { this.state._creator && (
-                                        <MdDelete 
-                                            className="fa fa-delete"
-                                            onClick={this.deleteStory} 
-                                        />
+                                    { this.state._id && ( //for new story, don't show delete icon
+                                        <button onClick={this.deleteStory} className="button button--link">delete</button>
                                     )}
                                 </div>
                             )}
@@ -113,6 +141,7 @@ export class StoryModal extends React.Component {
 
 const mapStateToProps = (state) => ({
     story: state.modal.story,
+    isOpen: state.modal.isOpen,
     uid: state.auth.uid
 })
 

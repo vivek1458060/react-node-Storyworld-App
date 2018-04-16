@@ -18,7 +18,7 @@ export class LoginPage extends React.Component {
         return (
             <div className="box-layout">
                 <div className="box-layout__box">
-                    <h1 className="box-layout__title">Node + React JWTauth</h1>
+                    <h1 className="box-layout__title">Storyclub</h1>
                     <p>Get started - it's free.</p>
                     {this.state.showSignupForm ? (
                         <div>
