@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import Stories from './Stories';
 import AddStory from './AddStory';
 import {startSetSingleUserStories} from '../actions/stories';
-import UpdateForm from './UpdateForm';
 import MdEdit from 'react-icons/lib/md/edit';
 import {FaQuoteLeft, FaQuoteRight, FaCamera} from 'react-icons/lib/fa';
 import axios, { post } from 'axios';
