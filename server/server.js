@@ -11,11 +11,13 @@ var {mongoose} = require('./db/mongoose');
 var {Story} = require('./models/story');
 var {User} = require('./models/user');
 var {authenticate} = require('./middleware/authenticate');
+var {upload} = require('./server-utils/multer');
 
 var app = express();
 const port = process.env.PORT;
 const publicPath = path.join(__dirname, '..', 'public');
 app.use(express.static(publicPath));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //add new story
@@ -190,10 +192,56 @@ app.post('/users', (req,res) => {
   });
 });
 
+//user edit
+app.post('/users/edit', authenticate, (req, res) => {
+  var body = _.pick(req.body, ['coverQuote', 'bio', 'location']);
+
+  User.findByIdAndUpdate({_id: req.user._id}, {$set: body}, {new: true}).then((user) => {
+    if(!user) {
+      res.status(404).send();
+    }
+    res.send({ user })
+  }, (err) => {
+    res.status(400).send(err);
+  });
+});
+
+//image upload 
+app.post('/upload', authenticate, (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      if (req.file == undefined) {
+        res.status(400).send('Error: No File Selected!');
+      } else {
+        User.findByIdAndUpdate({_id: req.user._id}, {$set: {dpName: req.file.filename}}, {new: true}).then((user) => {
+          console.log(user);
+        }, (err) => {
+          console.log(err);
+        });
+        res.status(200).send({filename: req.file.filename});
+      }
+    }
+  });
+});
+
 //this route will return a individual authenticated user
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
 });
+
+app.get('/users/:id', (req, res) => {
+  const id = req.params.id;
+  User.findById(id).then((user) => {
+    if(!user) {
+      res.status(404).send();
+    }
+    res.send({user});
+  }).catch((e) => {
+    res.status(400).send(e);
+  })
+})
 
 // POST /users/login {email, password}
 app.post('/users/login', (req, res) => {

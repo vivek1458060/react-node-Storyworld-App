@@ -9,15 +9,6 @@
     margin: 0;
     color: white;
     font-weight: 300; 
-    span {
-        font-weight: 700;
-    }
-}
-
-.page-header__title--quote {
-    font-size: 25px;
-    font-family: Courier;
-    padding: 0 2rem;
 }
 
 .page-header__subtitle {
@@ -30,24 +21,4 @@
 
 .page-header__actions {
     padding: 2rem;
-}
-
-.page-header__profile-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: white;
-    margin-top: 1rem;
-    > div {
-        background: linear-gradient(to bottom, $off-blue 50%, white 50%);
-        img {
-            width: 15rem;
-            height: 15rem;
-            border-radius: 50%;
-        }
-    }
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
 }

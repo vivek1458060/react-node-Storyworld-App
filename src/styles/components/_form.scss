@@ -1,4 +1,6 @@
 .form {
+    max-width: 60rem;
+    margin: auto;
     display: flex;
     flex-direction: column;
     > * {

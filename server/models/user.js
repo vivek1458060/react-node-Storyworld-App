@@ -27,6 +27,10 @@ var UserSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
+  dpName: { type: String },
+  coverQuote: { type: String, default: `Can't praise myself...`},
+  bio: { type: String, default: 'Working at  XYZ company' },
+  location: { type: String, default: 'Anandapur, Kolkata' },
   tokens: [{
     access: {
       type: String,
@@ -44,7 +48,7 @@ UserSchema.methods.toJSON = function() {
   var user = this;
   var userObject = user.toObject(); //toObject() will convert user to regular object where only properties exist
 
-  return _.pick(userObject, ['_id', 'fullName', 'email']);
+  return _.pick(userObject, ['_id', 'fullName', 'email', 'dpName', 'coverQuote', 'bio', 'location']);
 };
 
 UserSchema.methods.generateAuthToken = function() {

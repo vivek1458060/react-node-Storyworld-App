@@ -1,0 +1,102 @@
+.page-header__title--quote {
+    font-size: 25px;
+    font-family: Courier;
+    padding: 0 2rem;
+    color: white;
+}
+
+.add-cover-quote {
+    span {
+        border: 1px solid white;
+        padding: 5px;
+        color: white;
+        width: 20rem;
+        cursor: pointer;
+        > * {
+            margin: 0 .5rem; 
+        }
+    }
+}
+
+.page-header__profile-info {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    margin-top: 1rem;
+    > div {
+        background: linear-gradient(to bottom, $off-blue 50%, white 50%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .dp-container {
+            display: flex;
+            position: relative;
+            border: 1px solid gray;
+            border-radius: 4px;
+            img {
+                width: 15rem;
+                height: 15rem;
+            }
+            button {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background: #8737C2;
+                color: white;
+                outline: none;
+                border: none;
+                opacity: 0;
+                transition: opacity .3s ease-out;
+                padding: .5rem;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                @media (max-width: $desktop-breakpoint) {
+                    opacity: 1;
+                    width: 50%;
+                    right: 0;
+                    letter-spacing: normal;
+                }
+            }
+            &:hover {
+                button {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+}
+
+.profile-edit-form {
+    width: 30rem;
+    height: 14.4rem;
+    border: 1px solid $grey;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    textarea, input {
+        flex-grow: 7;
+        margin: 0;
+        text-align: center;
+        padding: $s-size $m-size;
+        border: none;
+    }
+    div {
+        flex-grow: 3;
+        padding: 5px;
+        background: $grey;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        button {
+            border: none;
+            background: $blue;
+            color: white;
+        }
+    }
+}

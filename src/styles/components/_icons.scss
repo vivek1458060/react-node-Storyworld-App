@@ -1,5 +1,7 @@
 .fa {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    margin: 0 4px;
+    cursor: pointer;
 } 
 
 .fa-edit {
@@ -7,5 +9,17 @@
 }
 
 .fa-delete {
+    color: $mandy; 
+}
+
+.fa-white {
+    color: white;
+}
+
+.fa-blue {
+    color: $off-blue;
+}
+
+.fa-mandy {
     color: $mandy; 
 }
