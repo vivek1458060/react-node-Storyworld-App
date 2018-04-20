@@ -8,7 +8,6 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import StoryModal from '../components/StoryModal';
 import ProfilePage from '../components/ProfilePage';
-import EditProfilePage from '../components/EditProfilePage';
 
 export const history = createHistory();
 
