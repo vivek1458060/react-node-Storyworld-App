@@ -7,10 +7,11 @@
 .add-story--text-input {
     flex-grow: 1;
     max-width: 50rem;
-    border: none;
     height: 5rem;
     outline: none;
     background: $white;
+    border: 1px solid $silver;
+    border-right: none;
 }
 
 .add-story__icons {
@@ -18,8 +19,10 @@
     align-items: center;
     padding-right: 10px;
     background: $white;
+    border: 1px solid $silver;
+    border-left: none;
 }
 
-.add-story__icons .fa-pencil{
-    color: $off-blue
+.add-story__icons .fa {
+    cursor: none;
 }

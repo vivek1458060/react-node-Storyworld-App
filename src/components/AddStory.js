@@ -12,7 +12,7 @@ export const AddStory = (props) => (
             onClick={() => props.openModal()}
         />
         <div className="add-story__icons">
-            <FaPencil className="fa fa-pencil"/>
+            <FaPencil className="fa fa-blue"/>
         </div>
     </div>
 )
