@@ -18,7 +18,7 @@
 }
 
 .modal {
-    background: $orange; //#FAFAFA
+    background: $Chantilly; //#FAFAFA
     width: 588px;
     outline: none;
     > form {
@@ -35,22 +35,25 @@
 .modal-title {
     margin: 0;
     padding: 10px;
-    background: $orange;
+    background: $Chantilly;
     outline: none;
     border: none;
+    font-weight: 600;
+    font-size: $font-size-small;
 }
 
 .modal-body {
-    -moz-box-shadow:    inset  0  10px 10px -10px grey, 
-                        inset  0 -10px 10px -10px grey;
-    -webkit-box-shadow: inset  0  10px 10px -10px grey, 
-                        inset  0 -10px 10px -10px grey;
-    box-shadow:         inset  0  10px 10px -10px grey, 
-                        inset  0 -10px 10px -10px grey;
+    -moz-box-shadow:    inset  0  5px 5px -5px $grey, 
+                        inset  0 -3px 3px -3px $grey;
+    -webkit-box-shadow: inset  0  5px 5px -5px $grey, 
+                        inset  0 -3px 3px -3px $grey;
+    box-shadow:         inset  0  5px 5px -5px $grey, 
+                        inset  0 -3px 3px -3px $grey;
+    border: none;
     outline: none;
     text-align: justify;
     padding: 5px 10px 25px 10px;
-    background: $orange; 
+    background: $Chantilly; 
     &:disabled {
         color: black;
     }
@@ -61,7 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: gray;
+    color: $grey;
     * {
         font-size: $font-size-small;
     }

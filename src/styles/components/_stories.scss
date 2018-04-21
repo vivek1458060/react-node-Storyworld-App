@@ -15,16 +15,16 @@
     padding: 0 5px;
     margin-top: 8px;
     > div:first-child {
-        background: $orange;
+        background: $Chantilly;
         padding: 10px 15px;
         text-align: justify;
         cursor: pointer;
-        -webkit-box-shadow: 0 0 5px 0 grey;
-        -moz-box-shadow: 0 0 5px 0 grey;
-        box-shadow: 0 0 10px 0 grey;
+        -webkit-box-shadow: 0 0 5px 0 $grey;
+        -moz-box-shadow: 0 0 5px 0 $grey;
+        box-shadow: 0 0 10px 0 $grey;
         transition: background .3s ease-in-out;
         &:hover {
-            background: lighten($orange, 10%);
+            background: lighten($Chantilly, 10%);
         }
     }
 }
@@ -53,7 +53,7 @@
 }
 
 .story__footer {
-    background: $orange;
+    background: $Chantilly;
     text-align: right;
     .button--link {
         font-size: $font-size-small;

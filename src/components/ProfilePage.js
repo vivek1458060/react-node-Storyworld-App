@@ -11,11 +11,11 @@ import _ from 'lodash';
 
 export class ProfilePage extends React.Component {
     state = {
-        coverQuote: 'i am bad man',
-        dpName: null,
-        fullName: 'Vivek kumar',
-        bio: 'nice',
-        location: 'kolkata',
+        coverQuote: '',
+        dpName: '',
+        fullName: '',
+        bio: '',
+        location: '',
         stories: null,
         selectedDp: null,
         coverQuoteDisplay: true,
@@ -24,6 +24,7 @@ export class ProfilePage extends React.Component {
         locationDisplay: true,
 
     }
+    
     uid = this.props.match.params.uid;
     currentUser = this.uid === this.props.uid;
     componentWillMount() {
@@ -171,6 +172,7 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onCoverQuoteChange}
                                     />
                                     <div>
+                                        <button type="button">Cancel</button>
                                         <button>Save</button>
                                     </div>
                                 </form>
@@ -217,6 +219,7 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onBioChange}
                                     />
                                     <div>
+                                        <button type="button">Cancel</button>
                                         <button>Save</button>
                                     </div>
                                 </form>
@@ -239,6 +242,7 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onLocationChange}
                                     />
                                     <div>
+                                        <button type="button">Cancel</button>
                                         <button>Save</button>
                                     </div>
                                 </form>
@@ -249,7 +253,7 @@ export class ProfilePage extends React.Component {
                 <div className="content-container">
                         { this.currentUser && <AddStory />}
                         {this.state.stories && this.state.stories.length ? 
-                            <h1>Recent posts</h1> : <h1>no post added yet</h1>}
+                            <h3>Recent posts</h3> : <h3>no post added yet</h3>}
                         {this.state.stories && (
                             <Stories 
                                 stories={this.state.stories}

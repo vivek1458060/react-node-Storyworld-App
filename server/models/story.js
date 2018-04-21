@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 var StorySchema = new mongoose.Schema({
   heading: { type: String, required: true, trim: true, minlength: 1 },
-  text: { type: String, required: false, trim: true, minlength: 1 },
+  text: { type: String, trim: true },
   privacy: { type:Boolean, default: false },
   completed: { type: Boolean, default: false },
   completedAt: { type: Number, default: null },

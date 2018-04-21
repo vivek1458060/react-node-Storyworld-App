@@ -27,7 +27,7 @@ var UserSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
-  dpName: { type: String },
+  dpName: { type: String, default: 'default_dp.jpg' },
   coverQuote: { type: String, default: `Can't praise myself...`},
   bio: { type: String, default: 'Working at  XYZ company' },
   location: { type: String, default: 'Anandapur, Kolkata' },

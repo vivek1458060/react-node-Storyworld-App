@@ -5,7 +5,7 @@ import Stories from './Stories';
 export const PublicStories = (props) => (
     <div>
         <div className="content-container">
-            <h1>Public Stories</h1>
+            <h3>Public Stories</h3>
         </div>
         <Stories 
             stories={props.stories}
