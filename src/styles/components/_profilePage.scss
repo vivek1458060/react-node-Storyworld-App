@@ -34,9 +34,16 @@
             position: relative;
             border: 1px solid gray;
             border-radius: 4px;
-            img {
+            // img {
+            //     width: 15rem;
+            //     height: 15rem;
+            // }
+            progress {
+                position: absolute;
+                top: 0;
+                left: 0;
                 width: 15rem;
-                height: 15rem;
+                height: .8rem;
             }
             button {
                 position: absolute;

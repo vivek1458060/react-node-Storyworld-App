@@ -12,7 +12,7 @@ import _ from 'lodash';
 export class ProfilePage extends React.Component {
     state = {
         coverQuote: '',
-        dpName: '',
+        dpUrl: '',
         fullName: '',
         bio: '',
         location: '',
@@ -34,13 +34,8 @@ export class ProfilePage extends React.Component {
             url: `/users/${this.uid}`,
             headers: {'x-auth': this.props.authToken}
         }).then((res) => {
-            this.setState({
-                coverQuote: res.data.user.coverQuote,
-                fullName: res.data.user.fullName,
-                dpName: res.data.user.dpName,
-                bio: res.data.user.bio,
-                location: res.data.user.location
-            })
+            const {coverQuote, fullName, dpUrl, bio, location} = res.data.user;
+            this.setState({ coverQuote, fullName, dpUrl, bio, location })
         }).catch((e) => {
             console.log(e);
         })
@@ -106,10 +101,14 @@ export class ProfilePage extends React.Component {
             const fd = new FormData();
             fd.append('file', this.state.selectedDp);
             post('/upload', fd, {
-                headers: { 'x-auth': localStorage.getItem('x-auth')}
+                headers: { 'x-auth': localStorage.getItem('x-auth')},
+                onUploadProgress: (progressEvent) => {
+                    const { loaded, total } = progressEvent;
+                    console.log(loaded, total);
+                  },
             }).then((res) => {
                 this.setState({
-                    dpName: res.data.filename
+                    dpUrl: res.data.dpUrl
                 })
             })
         }) 
@@ -182,7 +181,7 @@ export class ProfilePage extends React.Component {
                     <div className="page-header__profile-info">
                         <div>
                             <div className="dp-container">
-                                <img className="img" src={`/uploads/${this.state.dpName}`} />
+                                <img className="img" src={`http://res.cloudinary.com/hpustufki/image/upload/c_fill,h_150,w_150,g_face/${this.state.dpUrl}`}/>
                                 { this.currentUser && (
                                 <div>
                                     <input

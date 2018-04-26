@@ -6,6 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
 const bcrypt = require('bcryptjs');
+var cloudinary = require('cloudinary');
 
 var {mongoose} = require('./db/mongoose');
 var {Story} = require('./models/story');
@@ -215,16 +216,26 @@ app.post('/upload', authenticate, (req, res) => {
       if (req.file == undefined) {
         res.status(400).send('Error: No File Selected!');
       } else {
-        User.findByIdAndUpdate({_id: req.user._id}, {$set: {dpName: req.file.filename}}, {new: true}).then((user) => {
-          console.log(user);
-        }, (err) => {
-          console.log(err);
-        });
-        res.status(200).send({filename: req.file.filename});
+        cloudinary.uploader.upload(
+          path.join(__dirname, '..', `public/images/${req.file.filename}`),
+          (result) => { 
+            const dpUrl = `v${result.version}/${result.public_id}.${result.format}`;
+            User.findByIdAndUpdate({_id: req.user._id}, {$set: {dpUrl}}, {new: true}).then((user) => {
+              res.status(200).send({dpUrl});
+            }, (err) => {
+              res.status(400).send(err);
+            });
+           },
+          { public_id: `${req.user._id}_dp`,
+            invalidate: true
+          }      
+        )
       }
     }
   });
 });
+
+
 
 //this route will return a individual authenticated user
 app.get('/users/me', authenticate, (req, res) => {
