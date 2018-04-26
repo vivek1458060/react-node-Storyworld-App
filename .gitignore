@@ -2,3 +2,4 @@ node_modules/
 public/dist/
 server/config/config.json
 playground/
+.env.cloudinary_url

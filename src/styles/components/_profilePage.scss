@@ -42,12 +42,12 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 15.1rem;
+                width: 15.6rem;
                 height: .5rem;
             }
             button {
                 position: absolute;
-                left: 0;
+                right: 0;
                 bottom: 0;
                 width: 100%;
                 background: #8737C2;
@@ -62,7 +62,6 @@
                 @media (max-width: $desktop-breakpoint) {
                     opacity: 1;
                     width: 50%;
-                    right: 0;
                     letter-spacing: normal;
                 }
             }

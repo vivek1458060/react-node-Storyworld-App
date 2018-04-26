@@ -23,6 +23,10 @@ export class ProfilePage extends React.Component {
         fullNameDisplay: true,
         bioDisplay: true,
         locationDisplay: true,
+        coverQuotePrev: true,
+        fullNamePrev: true,
+        bioPrev: true,
+        locationPrev: true,
     }
     
     uid = this.props.match.params.uid;
@@ -35,7 +39,17 @@ export class ProfilePage extends React.Component {
             headers: {'x-auth': this.props.authToken}
         }).then((res) => {
             const {coverQuote, fullName, dpUrl, bio, location} = res.data.user;
-            this.setState({ coverQuote, fullName, dpUrl, bio, location })
+            this.setState({ 
+                coverQuote, 
+                fullName, 
+                dpUrl, 
+                bio, 
+                location,
+                coverQuotePrev: coverQuote,
+                fullNamePrev: fullName,
+                bioPrev: bio,
+                locationPrev: location
+            })
         }).catch((e) => {
             console.log(e);
         })
@@ -130,8 +144,14 @@ export class ProfilePage extends React.Component {
     onLocationChange = (e) => {
         this.setState({ location: e.target.value })
     }
+    onEditedCancel = (toCancel) => {
+        const toCancelPrev = this.state[toCancel+'Prev'];
+        const toCancelDisplay = toCancel + 'Display';
+        this.setState({ [toCancel]: toCancelPrev, [toCancelDisplay]: true });
+    }
     onEditedSubmit = (e, toEdit) => {
         e.preventDefault();
+        const toEditPrev = toEdit + 'Prev';
         const toEditDisplay = toEdit + 'Display';
         this.setState({ 
             [toEditDisplay]: true
@@ -145,7 +165,7 @@ export class ProfilePage extends React.Component {
             data,
             headers: {'x-auth': this.props.authToken}
         }).then((res) => {
-            console.log('success');
+            this.setState({ [toEditPrev]: res.data.user[toEdit] });
         }).catch((e) => {
             console.log(e);
         })
@@ -173,7 +193,11 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onCoverQuoteChange}
                                     />
                                     <div>
-                                        <button type="button">Cancel</button>
+                                        <button type="button" 
+                                            onClick={() => this.onEditedCancel('coverQuote')}
+                                        >
+                                            Cancel
+                                        </button>
                                         <button>Save</button>
                                     </div>
                                 </form>
@@ -183,7 +207,7 @@ export class ProfilePage extends React.Component {
                     <div className="page-header__profile-info">
                         <div>
                             <div className="dp-container">
-                                <img className="img" src={`http://res.cloudinary.com/hpustufki/image/upload/c_fill,h_150,w_150,g_face/${this.state.dpUrl}`}/>
+                                <img className="img" src={`http://res.cloudinary.com/hpustufki/image/upload/c_fill,h_150,w_150,bo_3px_solid_darkblue,g_face/${this.state.dpUrl}`} />
                                 { this.currentUser && (
                                 <div>
                                     <input
@@ -221,7 +245,11 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onBioChange}
                                     />
                                     <div>
-                                        <button type="button">Cancel</button>
+                                        <button type="button" 
+                                            onClick={() => this.onEditedCancel('bio')}
+                                        >
+                                            Cancel
+                                        </button>
                                         <button>Save</button>
                                     </div>
                                 </form>
@@ -244,7 +272,11 @@ export class ProfilePage extends React.Component {
                                         onChange={this.onLocationChange}
                                     />
                                     <div>
-                                        <button type="button">Cancel</button>
+                                        <button type="button" 
+                                            onClick={() => this.onEditedCancel('location')}
+                                        >
+                                            Cancel
+                                        </button>
                                         <button>Save</button>
                                     </div>
                                 </form>
