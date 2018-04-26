@@ -18,11 +18,11 @@ export class ProfilePage extends React.Component {
         location: '',
         stories: null,
         selectedDp: null,
+        dpUploadProgress: null,
         coverQuoteDisplay: true,
         fullNameDisplay: true,
         bioDisplay: true,
         locationDisplay: true,
-
     }
     
     uid = this.props.match.params.uid;
@@ -104,9 +104,11 @@ export class ProfilePage extends React.Component {
                 headers: { 'x-auth': localStorage.getItem('x-auth')},
                 onUploadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
-                    console.log(loaded, total);
+                    const dpUploadProgress = Math.round((loaded / total) * 100);
+                    this.setState({dpUploadProgress});
                   },
             }).then((res) => {
+                this.setState({dpUploadProgress: null});
                 this.setState({
                     dpUrl: res.data.dpUrl
                 })
@@ -190,6 +192,7 @@ export class ProfilePage extends React.Component {
                                         onChange={this.dpUploadHandler}
                                         ref={ fileInput => this.fileInput = fileInput }
                                     />
+                                    {this.state.dpUploadProgress && <progress value={this.state.dpUploadProgress} max="100"></progress>}
                                     <button onClick={() => this.fileInput.click()} className="upload-button">
                                         <span className="show-for-desktop"><FaCamera /> upload profile pic</span>
                                         <span className="show-for-mobile"><FaCamera /> Edit</span>
