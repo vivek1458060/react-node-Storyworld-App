@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Header from '../components/Header';
+import ChatPage from '../components/ChatPage';
 
 export const PrivateRoute = ({
     isAuthenticated,
@@ -11,10 +12,12 @@ export const PrivateRoute = ({
     <div>
         <Route {...rest} component={(props) => (
             isAuthenticated ? (
+                Component != ChatPage ? (
                 <div>
                     <Header />
                     <Component {...props}/>
                 </div>
+                ) : ( <Component {...props}/> )
             ) : (
                 <Redirect to="/" />
             )

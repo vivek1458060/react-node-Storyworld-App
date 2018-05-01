@@ -19,7 +19,7 @@ export const Header = ({ startLogout }) => (
                     <div className="dropdown__content">
                         <div className="room-actions">
                             <h3>Join Chat Rooms</h3>
-                            <button>Create new</button>
+                            <Link to="/chat"><button>Create new</button></Link>
                         </div>
                         <input className="room-search" type="text" placeholder="Search chat rooms" />
                         <ul className="room-list">
